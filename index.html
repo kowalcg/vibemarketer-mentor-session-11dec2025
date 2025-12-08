@@ -1910,13 +1910,41 @@
         
         <div class="step-card mb-4">
           <div class="step-number">4</div>
-          <h3 class="step-title">Debug with Cursor + Claude Code</h3>
+          <h3 class="step-title">Debug with VibeCode, Cursor + Claude Code</h3>
           <p class="step-content">When things break (they will): Screenshot → AI → Explanation → Fix → Test → Repeat</p>
+          
+          <div style="background: rgba(139, 92, 246, 0.1); padding: var(--space-4); border-radius: 8px; margin-top: var(--space-4); border-left: 4px solid var(--accent-purple);">
+            <h4 style="font-size: var(--text-base); color: var(--accent-purple); margin-bottom: var(--space-2);">🛠️ VibeCode Debugging:</h4>
+            <ul class="step-list">
+              <li><strong>Use different Claude models:</strong> Sonnet or Opus depending on difficulty</li>
+              <li><strong>Always work in small chunks</strong></li>
+              <li><strong>Watch for hallucinations:</strong> If agent starts giving weird responses</li>
+              <li><strong>When hallucinating occurs:</strong>
+                <ul style="margin-left: 20px; margin-top: 8px;">
+                  <li>Clear the window</li>
+                  <li>Clear the memory</li>
+                  <li>Start over</li>
+                  <li>Re-educate the agent with context</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+          <div style="background: rgba(59, 130, 246, 0.1); padding: var(--space-4); border-radius: 8px; margin-top: var(--space-4); border-left: 4px solid var(--accent-blue);">
+            <h4 style="font-size: var(--text-base); color: var(--accent-blue); margin-bottom: var(--space-2);">⚡ Cursor + Claude Code Context Management:</h4>
+            <ul class="step-list">
+              <li><strong>Monitor context usage constantly</strong></li>
+              <li><strong>60% context rule:</strong> If you go over 60% of available context → consider starting new agent</li>
+              <li><strong>Especially critical</strong> when handling difficult/complex tasks</li>
+              <li><strong>Automatic tools available:</strong> Check Resources section for code checking and fixing tools</li>
+            </ul>
+          </div>
+          
           <ul class="step-list mt-4">
             <li>Expect hundreds of iterations</li>
             <li>Things will break repeatedly</li>
             <li>Persistence > talent</li>
-            <li>Support communities help</li>
+            <li>Support communities help immensely</li>
           </ul>
         </div>
         
