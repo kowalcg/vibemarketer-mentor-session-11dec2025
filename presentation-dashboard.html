@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Built Two Apps With AI as a Non-Coder Founder (Age 55)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-elevated: #334155;
+            --accent-primary: #3b82f6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --accent-teal: #06b6d4;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent-primary);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .nav-item.active {
+            background: var(--accent-primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .nav-time {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .nav-item.active .nav-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .progress-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .progress-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-teal));
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 280px;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        /* Section Container */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .app-showcase {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .app-preview {
+            width: 200px;
+            height: 400px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .app-preview:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-primary);
+            border: 3px solid var(--bg-main);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-side {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .comparison-side.old {
+            border-color: var(--accent-danger);
+        }
+
+        .comparison-side.new {
+            border-color: var(--accent-success);
+        }
+
+        .comparison-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .comparison-side.old .comparison-title {
+            color: var(--accent-danger);
+        }
+
+        .comparison-side.new .comparison-title {
+            color: var(--accent-success);
+        }
+
+        .comparison-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+        }
+
+        /* Quote Card */
+        .quote-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-elevated);
+        }
+
+        /* Screenshot Grid */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .screenshot-slot {
+            aspect-ratio: 9/16;
+            background: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-slot:hover {
+            border-color: var(--accent-primary);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Rejection Counter */
+        .rejection-counter {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .rejection-number {
+            font-size: 4rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-danger), var(--accent-warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .rejection-label {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+
+        .approval-badge {
+            display: inline-block;
+            background: var(--accent-success);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Step Card */
+        .step-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Tool Card */
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+        }
+
+        .tool-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .tool-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Event Info */
+        .event-info {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-primary);
+            border-radius: 12px;
+        }
+
+        .event-date {
+            font-size: 1.25rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-time {
+            color: var(--text-secondary);
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-primary);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .tag {
+            background: var(--bg-elevated);
+            color: var(--text-muted);
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tag.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-success);
+        }
+
+        .tag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent-warning);
+        }
+
+        .tag.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-danger);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: sticky;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .nav-time {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .app-showcase {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="logo">🚀 App Building Journey</div>
+
+        <div class="nav-item active" onclick="showSection('home')">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('intro')">
+            <span class="nav-icon">👋</span>
+            <span>Who I Am</span>
+            <span class="nav-time">5min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('journey')">
+            <span class="nav-icon">🔄</span>
+            <span>The Journey</span>
+            <span class="nav-time">3min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('runmate')">
+            <span class="nav-icon">🏃</span>
+            <span>RunMate Pro</span>
+            <span class="nav-time">12min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('sunup')">
+            <span class="nav-icon">☀️</span>
+            <span>SunUp</span>
+            <span class="nav-time">12min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('obstacles')">
+            <span class="nav-icon">⚠️</span>
+            <span>Obstacles</span>
+            <span class="nav-time">10min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('framework')">
+            <span class="nav-icon">📋</span>
+            <span>5-Step Framework</span>
+            <span class="nav-time">10min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('toolchain')">
+            <span class="nav-icon">🛠️</span>
+            <span>AI Toolchain</span>
+            <span class="nav-time">10min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('impact')">
+            <span class="nav-icon">🎯</span>
+            <span>Impact</span>
+            <span class="nav-time">10min</span>
+        </div>
+
+        <div class="nav-item" onclick="showSection('qa')">
+            <span class="nav-icon">❓</span>
+            <span>Q&A</span>
+            <span class="nav-time">18min</span>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-label">Session Progress</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-label" style="margin-top: 8px;" id="progressText">0 / 90 minutes</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+        <!-- SECTION: HOME -->
+        <div id="home" class="section active">
+            <div class="section-content">
+                <div class="hero">
+                    <h1 class="hero-title">How I Built Two Apps With AI<br>as a Non-Coder Founder (Age 55)</h1>
+                    <p class="hero-subtitle">A 90-Minute Journey Through Real Moments, Struggle, and Discovery</p>
+
+                    <div class="app-showcase">
+                        <div class="app-preview">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 8px;">RunMate Pro</div>
+                                <div>[App Screenshot]</div>
+                            </div>
+                        </div>
+                        <div class="app-preview">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 8px;">SunUp</div>
+                                <div>[App Screenshot]</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="card">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">📖</div>
+                            <h4>THE STORY</h4>
+                            <p style="font-size: 0.875rem;">The journey from engineer to app builder</p>
+                        </div>
+                        <div class="card">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">🎓</div>
+                            <h4>MASTERCLASS</h4>
+                            <p style="font-size: 0.875rem;">Practical 5-step guide to build your first AI app</p>
+                        </div>
+                        <div class="card">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">💡</div>
+                            <h4>IMPACT</h4>
+                            <p style="font-size: 0.875rem;">Business & personal transformation</p>
+                        </div>
+                    </div>
+
+                    <div class="event-info">
+                        <div class="event-date">Thursday, December 11, 2025 • 12:00 PM ET</div>
+                        <div class="event-time">VibeMarketer Community • 90 Minutes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: INTRO -->
+        <div id="intro" class="section">
+            <div class="section-content">
+                <h2>Who I Am: "I Wasn't Supposed to Build Apps"</h2>
+
+                <div class="quote-card">
+                    <div class="quote-text">"55-year-old me building apps was never in the life plan"</div>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1990s</div>
+                        <h4>Last Coding Experience</h4>
+                        <p>Visual Basic class in university. That was it.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Corporate Life (20+ years)</div>
+                        <h4>Mechanical Engineer</h4>
+                        <p>Design engineer → Senior engineer → Managed 70+ people</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2014</div>
+                        <h4>E-Commerce Founder</h4>
+                        <p>Left corporate world, started GearTOP & TapeGeeks with daughter (22, in university)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">June 17, 2025</div>
+                        <h4>Signed Up for VibeCode</h4>
+                        <p>The turning point. Started building apps at age 55.</p>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>BEFORE</h4>
+                        <ul>
+                            <li>Mechanical Engineer</li>
+                            <li>20+ years corporate</li>
+                            <li>Managed 70 engineers</li>
+                            <li>VB class in 1990s</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>MIDDLE</h4>
+                        <ul>
+                            <li>E-commerce Founder</li>
+                            <li>GearTOP (sun protection)</li>
+                            <li>TapeGeeks (athletic tape)</li>
+                            <li>Amazon + Shopify</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>NOW</h4>
+                        <ul>
+                            <li>App Builder</li>
+                            <li>RunMate Pro (live)</li>
+                            <li>SunUp (live)</li>
+                            <li>3 more in development</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="image-placeholder">
+                    [Your Professional Photo Here]
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: JOURNEY -->
+        <div id="journey" class="section">
+            <div class="section-content">
+                <h2>Old World vs New World</h2>
+
+                <div class="comparison">
+                    <div class="comparison-side old">
+                        <div class="comparison-title">OLD WORLD<br>(pre-2025)</div>
+                        <div class="comparison-item">💰 $30K-$150K app development</div>
+                        <div class="comparison-item">👥 Needed dev teams</div>
+                        <div class="comparison-item">📅 Months to build</div>
+                        <div class="comparison-item">🚫 Non-coders excluded</div>
+                        <div class="comparison-item">📉 Slow iteration</div>
+                        <div class="comparison-item">🎯 No visibility into process</div>
+                    </div>
+                    <div class="comparison-side new">
+                        <div class="comparison-title">NEW WORLD<br>(2025+)</div>
+                        <div class="comparison-item">🚀 VibeCode</div>
+                        <div class="comparison-item">🖥️ Cursor 2.0</div>
+                        <div class="comparison-item">🤖 Claude Code</div>
+                        <div class="comparison-item">🔗 MCPs</div>
+                        <div class="comparison-item">⚡ Days/weeks not months</div>
+                        <div class="comparison-item">✅ Full control & visibility</div>
+                    </div>
+                </div>
+
+                <div class="quote-card">
+                    <div class="quote-text">"The Gap Has Closed"</div>
+                    <div class="quote-author">Non-technical founders can now build production software</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: RUNMATE PRO -->
+        <div id="runmate" class="section">
+            <div class="section-content">
+                <h2>RunMate Pro: Solving My Running Problem</h2>
+
+                <div class="image-placeholder" style="height: 400px;">
+                    [RunMate Pro App Screenshot - Hero Image]
+                </div>
+
+                <div class="quote-card">
+                    <div class="quote-text">"16 years of tracking running shoes in spreadsheets. There had to be a better way."</div>
+                </div>
+
+                <h3>Core Features</h3>
+                <div class="grid-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📍</div>
+                        <div class="feature-title">GPS Tracker</div>
+                        <div class="feature-description">Real-time distance, pace, routes with background tracking</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👟</div>
+                        <div class="feature-title">Shoe Mileage</div>
+                        <div class="feature-description">Track multiple shoes, know when to replace, prevent injury</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🗺️</div>
+                        <div class="feature-title">AI Routes</div>
+                        <div class="feature-description">Custom routes, AI-generated suggestions, save favorites</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🩹</div>
+                        <div class="feature-title">Injury Prevention</div>
+                        <div class="feature-description">Educational content, warm-ups, taping guides, recovery</div>
+                    </div>
+                </div>
+
+                <h3>App Screenshots Gallery</h3>
+                <div class="screenshot-grid">
+                    <div class="screenshot-slot">[GPS Tracking<br>Screenshot]</div>
+                    <div class="screenshot-slot">[Shoe Tracker<br>Screenshot]</div>
+                    <div class="screenshot-slot">[Route Creator<br>Screenshot]</div>
+                    <div class="screenshot-slot">[Injury Guide<br>Screenshot]</div>
+                </div>
+
+                <h3>Development Journey</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Week 1</div>
+                        <h4>The Idea</h4>
+                        <p>"Just a shoe tracker"</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Weeks 2-4</div>
+                        <h4>MVP Build</h4>
+                        <p>Added GPS, basic tracking</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Weeks 5-6</div>
+                        <h4>The Rebuild</h4>
+                        <p>Maps failed, started over with open-source</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Weeks 7-10</div>
+                        <h4>The Battle</h4>
+                        <p>39 App Store rejections</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Week 11</div>
+                        <h4>Victory!</h4>
+                        <p>APPROVED! Live in App Store</p>
+                    </div>
+                </div>
+
+                <div class="rejection-counter">
+                    <div class="rejection-number">39</div>
+                    <div class="rejection-label">App Store Rejections</div>
+                    <div style="text-align: center;">
+                        <span class="approval-badge">✅ APPROVED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: SUNUP -->
+        <div id="sunup" class="section">
+            <div class="section-content">
+                <h2>SunUp: Creating Value Beyond Hats</h2>
+
+                <div class="image-placeholder" style="height: 400px;">
+                    [SunUp App Screenshot - Hero Image]
+                </div>
+
+                <div class="quote-card">
+                    <div class="quote-text">"What if buying a hat came with a tool that actually protects you?"</div>
+                </div>
+
+                <h3>Core Features</h3>
+                <div class="grid-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">☀️</div>
+                        <div class="feature-title">UV Safety</div>
+                        <div class="feature-description">Personalized exposure times based on skin type, location, activity</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                        <div class="feature-title">Family Mode</div>
+                        <div class="feature-description">Check safety for loved ones anywhere in the world</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌬️</div>
+                        <div class="feature-title">Air Quality (AQI)</div>
+                        <div class="feature-description">Sun + air safety combined. Critical during wildfire season</div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Product Recommendations</div>
+                        <div class="feature-description">GearTOP hats, UPF clothing, sunscreen, naturally integrated</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <div class="feature-title">Educational Library</div>
+                        <div class="feature-description">Sun safety guides, UPF info, activity tips, skin health</div>
+                    </div>
+                </div>
+
+                <h3>App Screenshots Gallery</h3>
+                <div class="screenshot-grid">
+                    <div class="screenshot-slot">[UV Forecast<br>Screenshot]</div>
+                    <div class="screenshot-slot">[Family Mode<br>Screenshot]</div>
+                    <div class="screenshot-slot">[AQI Display<br>Screenshot]</div>
+                    <div class="screenshot-slot">[Recommendations<br>Screenshot]</div>
+                </div>
+
+                <h3>Business Transformation</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>BEFORE</h4>
+                        <p>Hat company competing on price</p>
+                        <p>BOGO, 20% off, endless discounts</p>
+                        <p>No real differentiation</p>
+                        <p>Physical product: $30-40</p>
+                    </div>
+                    <div class="card">
+                        <h4>AFTER</h4>
+                        <p>Sun protection ecosystem with authority</p>
+                        <p>Real utility for families</p>
+                        <p>Educational content builds trust</p>
+                        <p>App value: $40-50/year potential + physical product</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: OBSTACLES -->
+        <div id="obstacles" class="section">
+            <div class="section-content">
+                <h2>Obstacles That Almost Stopped Everything</h2>
+
+                <div class="quote-card">
+                    <div class="quote-text">"AI breaks things. A lot."</div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4>🤖 AI Hallucinations</h4>
+                            <span class="tag danger">Critical</span>
+                        </div>
+                        <ul>
+                            <li>AI would randomly change working code</li>
+                            <li>Break screens without warning</li>
+                            <li>Overwrite logic unexpectedly</li>
+                            <li><strong>Longest rollback: 5 full days of work</strong></li>
+                        </ul>
+                        <p><strong>Lesson:</strong> Version control is CRITICAL. Save often. AI drift is real.</p>
+                    </div>
+
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4>📍 GPS Tracking Nightmare</h4>
+                            <span class="tag danger">3 Weeks Stuck</span>
+                        </div>
+                        <ul>
+                            <li>GPS worked... until phone in pocket</li>
+                            <li>Signal would drop</li>
+                            <li>Tested outside 100+ times</li>
+                            <li>Screenshot → ChatGPT → Fix → Test → Repeat</li>
+                        </ul>
+                        <p><strong>Breakthrough:</strong> VibeCode co-founder Ansh personally helped solve it</p>
+                    </div>
+
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4>🗺️ Map System Rebuild</h4>
+                            <span class="tag warning">1 Week Lost</span>
+                        </div>
+                        <ul>
+                            <li>Mixed Apple Maps + Google Maps</li>
+                            <li>Billing issues</li>
+                            <li>Trail coverage problems</li>
+                            <li>Complete rebuild with open-source maps</li>
+                        </ul>
+                        <p><strong>Result:</strong> Better system, but lost a week of progress</p>
+                    </div>
+
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4>💻 Learning Curve</h4>
+                            <span class="tag warning">Ongoing</span>
+                        </div>
+                        <ul>
+                            <li>What is Expo?</li>
+                            <li>How does TestFlight work?</li>
+                            <li>Terminal: "What is this black screen?"</li>
+                            <li>Dependencies, conflicts, navigation stacks</li>
+                        </ul>
+                        <p><strong>Method:</strong> Ask AI → Read → Try → Fail → Ask again → Repeat</p>
+                    </div>
+                </div>
+
+                <h3>The App Store Battle</h3>
+                <div class="rejection-counter" style="margin: 3rem 0;">
+                    <div class="rejection-number">39</div>
+                    <div class="rejection-label">App Store Rejections for RunMate Pro</div>
+                    <div style="margin-top: 2rem; color: var(--text-secondary);">
+                        <p>Rejection 1-10: "I can fix this"</p>
+                        <p>Rejection 11-20: "This is harder than expected"</p>
+                        <p>Rejection 21-30: "Am I doing something wrong?"</p>
+                        <p>Rejection 31-37: "Maybe I should hire help"</p>
+                        <p>Rejection 38: "This is my last try"</p>
+                        <p style="font-size: 1.5rem; font-weight: 600; color: var(--accent-success); margin-top: 1rem;">Rejection 39: ✅ APPROVED!</p>
+                    </div>
+                </div>
+
+                <div class="quote-card">
+                    <div class="quote-text">"End of August 2025: Exhausted, frustrated, nearly gave up. Decision: Try one more time."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: FRAMEWORK -->
+        <div id="framework" class="section">
+            <div class="section-content">
+                <h2>Your 5-Step Framework to Build AI Apps</h2>
+
+                <div class="step-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div class="step-number">1</div>
+                        <div class="step-title" style="margin-left: 1rem; margin-bottom: 0;">Start with a Real Pain Point</div>
+                    </div>
+                    <p><strong>DON'T</strong> choose an idea you don't care about. Your personal frustration is your best fuel.</p>
+                    <h4 style="margin-top: 1rem;">✅ DO:</h4>
+                    <ul>
+                        <li>Pick something YOU struggle with</li>
+                        <li>Use your own experience</li>
+                        <li>Solve for yourself first</li>
+                    </ul>
+                    <h4>❌ DON'T:</h4>
+                    <ul>
+                        <li>Build what you think others want</li>
+                        <li>Chase trends without passion</li>
+                        <li>Pick ideas you're not invested in</li>
+                    </ul>
+                    <div class="quote-card" style="margin-top: 1rem;">
+                        <strong>Example:</strong> "I hate tracking running shoes in spreadsheets" → RunMate Pro
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div class="step-number">2</div>
+                        <div class="step-title" style="margin-left: 1rem; margin-bottom: 0;">Use AI to Generate PRD + Prompts</div>
+                    </div>
+                    <p>Don't start coding. Start planning.</p>
+                    <h4>ASK AI FOR:</h4>
+                    <ol>
+                        <li>Product Requirements Document (PRD)</li>
+                        <li>Feature list with priorities</li>
+                        <li>User flows and wireframes</li>
+                        <li>Prompts to feed VibeCode</li>
+                    </ol>
+                    <h4>TOOLS TO USE:</h4>
+                    <ul>
+                        <li><strong>ChatGPT</strong> - Quick brainstorming</li>
+                        <li><strong>Claude</strong> - Detailed architecture</li>
+                        <li><strong>Gemini</strong> - Research & validation</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div class="step-number">3</div>
+                        <div class="step-title" style="margin-left: 1rem; margin-bottom: 0;">Build Tiny Pieces → Test Immediately</div>
+                    </div>
+                    <p>DON'T try to build everything at once.</p>
+                    <h4>THE CYCLE:</h4>
+                    <ol>
+                        <li>Build ONE tiny feature</li>
+                        <li>Test in REAL WORLD</li>
+                        <li>Get immediate feedback</li>
+                        <li>Iterate and improve</li>
+                        <li>Repeat with next feature</li>
+                    </ol>
+                    <div class="quote-card" style="margin-top: 1rem;">
+                        <strong>Example:</strong> RunMate Pro GPS - Built basic tracking, went running outside 100+ times, screenshot when broken, debug with AI, test again
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div class="step-number">4</div>
+                        <div class="step-title" style="margin-left: 1rem; margin-bottom: 0;">Debug with Cursor + Claude Code</div>
+                    </div>
+                    <p>When things break (they will):</p>
+                    <h4>DEBUGGING WORKFLOW:</h4>
+                    <ol>
+                        <li>Take screenshot of error</li>
+                        <li>Send to ChatGPT/Claude</li>
+                        <li>Get explanation</li>
+                        <li>Use Cursor to implement fix</li>
+                        <li>Test again</li>
+                        <li>Repeat as needed</li>
+                    </ol>
+                    <p><strong>EXPECT:</strong> Hundreds of iterations, things to break repeatedly, slow progress some days, but breakthroughs eventually come</p>
+                    <div class="quote-card" style="margin-top: 1rem;">
+                        "Debugging IS the work. Building is the easy part."
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div class="step-number">5</div>
+                        <div class="step-title" style="margin-left: 1rem; margin-bottom: 0;">Version Control → Ship Early</div>
+                    </div>
+                    <h4>A) VERSION CONTROL</h4>
+                    <ul>
+                        <li>Save versions frequently</li>
+                        <li>AI will hallucinate</li>
+                        <li>AI will break working code</li>
+                        <li>Be ready to undo</li>
+                        <li>Keep clean backups</li>
+                    </ul>
+                    <h4>B) SHIP EARLY</h4>
+                    <ul>
+                        <li>Don't wait for perfect</li>
+                        <li>MVP is enough to start</li>
+                        <li>Submit to App Store early</li>
+                        <li>Learn from rejections</li>
+                        <li>Iterate based on feedback</li>
+                    </ul>
+                    <div class="quote-card" style="margin-top: 1rem;">
+                        "Done and improving beats perfect and never launched"
+                    </div>
+                </div>
+
+                <div class="quote-card" style="margin-top: 3rem;">
+                    <div class="quote-text">"If you follow this structure, you can build real software — faster than you think."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: TOOLCHAIN -->
+        <div id="toolchain" class="section">
+            <div class="section-content">
+                <h2>My AI Toolkit: What Each Tool Does</h2>
+
+                <h3>Primary Development Tools</h3>
+                <div class="grid-3">
+                    <div class="tool-card">
+                        <div class="tool-logo">🚀</div>
+                        <div class="tool-name">VibeCode</div>
+                        <div class="tool-description">App building platform - where both apps were born</div>
+                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">No-code scaffolding, React Native, screen generation</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-logo">⚡</div>
+                        <div class="tool-name">Cursor 2.0</div>
+                        <div class="tool-description">AI-assisted code editor for precise edits</div>
+                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">Local editing, terminal access, refactoring</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-logo">🤖</div>
+                        <div class="tool-name">Claude Code</div>
+                        <div class="tool-description">Planning, architecture, deep debugging</div>
+                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">PRD generation, code explanation, analysis</p>
+                    </div>
+                </div>
+
+                <h3>Supporting Tools</h3>
+                <div class="grid-3">
+                    <div class="tool-card">
+                        <div class="tool-logo">🔗</div>
+                        <div class="tool-name">MCPs</div>
+                        <div class="tool-description">Extended capabilities & integrations</div>
+                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">File system, API connections, automation</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-logo">💬</div>
+                        <div class="tool-name">ChatGPT</div>
+                        <div class="tool-description">Quick answers & brainstorming</div>
+                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">Rapid iteration, problem-solving, ideation</p>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-logo">✨</div>
+                        <div class="tool-name">Gemini Pro</div>
+                        <div class="tool-description">Research & visualization</div>
+                        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">Market analysis, data visualization, strategy</p>
+                    </div>
+                </div>
+
+                <h3>How They Work Together</h3>
+                <div class="card">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">IDEA PHASE</div>
+                            <p>ChatGPT/Claude → Generate PRD</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">PLANNING PHASE</div>
+                            <p>Claude Code → Technical architecture<br>Gemini → Market research</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">BUILDING PHASE</div>
+                            <p>VibeCode → Create app structure<br>Cursor → Refine specific features<br>MCPs → Connect external services</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">DEBUGGING PHASE</div>
+                            <p>ChatGPT → Quick fixes<br>Claude Code → Deep analysis<br>Cursor → Implement solutions</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">DEPLOYMENT PHASE</div>
+                            <p>Expo → Device testing<br>TestFlight → Beta testing<br>App Store Connect → Submission</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: IMPACT -->
+        <div id="impact" class="section">
+            <div class="section-content">
+                <h2>The Impact: What This Made Possible</h2>
+
+                <h3>Before vs After</h3>
+                <div class="comparison">
+                    <div class="comparison-side old">
+                        <div class="comparison-title">BEFORE<br>(June 2025)</div>
+                        <div class="comparison-item">0 apps</div>
+                        <div class="comparison-item">Slow marketing (10-14 days for landing page)</div>
+                        <div class="comparison-item">No differentiation</div>
+                        <div class="comparison-item">Commodity products</div>
+                        <div class="comparison-item">Amazon-only relationship</div>
+                        <div class="comparison-item">Price competition</div>
+                        <div class="comparison-item">Limited technical skills</div>
+                        <div class="comparison-item">E-commerce founder</div>
+                    </div>
+                    <div class="comparison-side new">
+                        <div class="comparison-title">AFTER<br>(December 2025)</div>
+                        <div class="comparison-item">2 live apps</div>
+                        <div class="comparison-item">Fast marketing (2-3 hours for landing page)</div>
+                        <div class="comparison-item">Ecosystem brands</div>
+                        <div class="comparison-item">Authority positioning</div>
+                        <div class="comparison-item">Direct customer access</div>
+                        <div class="comparison-item">Value competition</div>
+                        <div class="comparison-item">AI toolkit mastery</div>
+                        <div class="comparison-item">AI-enabled founder</div>
+                    </div>
+                </div>
+
+                <h3>Achievements (6 months)</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Apps Live in App Store</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">More in Development</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">39</div>
+                        <div class="stat-label">Rejections Overcome</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Years Running</div>
+                    </div>
+                </div>
+
+                <h3>Business Transformation</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>Marketing Speed ⚡</h4>
+                        <p>Before: 10-14 days for landing page</p>
+                        <p>After: 2-3 hours for landing page</p>
+                        <p style="margin-top: 1rem;">Content creation, blogs, PDFs - all generated in hours vs days/weeks</p>
+                    </div>
+                    <div class="card">
+                        <h4>Brand Evolution 🎯</h4>
+                        <p>From: "Nice hats" / "Good tape"</p>
+                        <p>To: "Sun safety ecosystem" / "Running health platform"</p>
+                        <p style="margin-top: 1rem;">Educational authority, not commodity seller</p>
+                    </div>
+                </div>
+
+                <h3>Community Impact</h3>
+                <div class="card">
+                    <ul>
+                        <li><strong>Toronto Waterfront Marathon Expo</strong> - Showcased both apps, first real-world validation</li>
+                        <li><strong>Running Group Leadership</strong> - Co-lead Bronte Runners, tape runners at races</li>
+                        <li><strong>Race Director (June 2026)</strong> - Organizing Bronte Harbour Classic 5K</li>
+                        <li><strong>Professional Credibility</strong> - Apps enhance authority in running community</li>
+                    </ul>
+                </div>
+
+                <div class="image-placeholder">
+                    [Toronto Marathon Expo Booth Photo]
+                </div>
+
+                <h3>Future Roadmap</h3>
+                <div class="card">
+                    <h4>Next 6-12 Months</h4>
+                    <ul>
+                        <li>Launch freemium models ($40-50/year premium)</li>
+                        <li>Add Vitamin D module to SunUp</li>
+                        <li>Build professional directory (physios, chiros)</li>
+                        <li>Expand educational content</li>
+                        <li>Grow affiliate network</li>
+                        <li>Launch Bronte Harbour Classic 5K (June 2026)</li>
+                        <li>Complete 3 additional apps</li>
+                        <li>Consulting/teaching opportunities</li>
+                    </ul>
+                </div>
+
+                <div class="quote-card" style="margin-top: 3rem;">
+                    <div class="quote-text">"It made me believe I could build the things I once thought were impossible."</div>
+                    <div class="quote-author">At age 55. With no coding. With curiosity, persistence, and the right tools.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: Q&A -->
+        <div id="qa" class="section">
+            <div class="section-content">
+                <h2>Ask Me Anything</h2>
+
+                <div style="text-align: center; margin: 3rem 0;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">❓</div>
+                    <p style="font-size: 1.5rem; color: var(--text-secondary);">18 minutes reserved for your questions</p>
+                </div>
+
+                <h3>Common Questions</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>How long did each app take?</h4>
+                        <p>RunMate Pro: ~8-10 weeks (June-August)</p>
+                        <p>SunUp: ~6 weeks (July-September)</p>
+                        <p>Built simultaneously while running businesses. Real timeline: 3-4 months from start to App Store.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>What was the hardest part?</h4>
+                        <p>GPS tracking (stuck for 3 weeks)</p>
+                        <p>App Store rejections (emotional toll)</p>
+                        <p>Learning terminal/Expo/TestFlight</p>
+                        <p>AI hallucinations breaking code</p>
+                        <p>Almost quitting in August</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Can non-coders really do this?</h4>
+                        <p><strong>YES, absolutely.</strong> I'm proof.</p>
+                        <p>Visual Basic in 1990s = only experience</p>
+                        <p>Tools have dramatically lowered barrier</p>
+                        <p><strong>Need:</strong> Curiosity + Persistence + Patience</p>
+                        <p><strong>Don't need:</strong> CS degree or coding experience</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>What would you do differently?</h4>
+                        <p>Start with ONE app, not two</p>
+                        <p>Save versions MORE frequently</p>
+                        <p>Ask for help sooner</p>
+                        <p>Submit to App Store earlier</p>
+                        <p>Accept imperfection faster</p>
+                        <p>Join communities first</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>How do you monetize?</h4>
+                        <p>Currently free (building user base)</p>
+                        <p>Future: Freemium model</p>
+                        <p>Premium: $40-50/year</p>
+                        <p><strong>Main value:</strong> Apps enhance product sales and create differentiation</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Where should someone start?</h4>
+                        <ol>
+                            <li>Identify YOUR pain point</li>
+                            <li>Join VibeMarketer community</li>
+                            <li>Sign up for VibeCode</li>
+                            <li>Follow 5-step framework</li>
+                            <li>Start small</li>
+                            <li>Ask for help</li>
+                            <li>Don't quit</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="event-info" style="margin-top: 3rem;">
+                    <h3>Connect With Me</h3>
+                    <p>VibeMarketer Community: <a href="https://www.skool.com/the-vibe-marketers/about?ref=1946b8770c3b4484baf4717f76ef065c" target="_blank" style="color: var(--accent-primary);">Join Here</a></p>
+                    <p>GearTOP • TapeGeeks</p>
+                    <p>Race Director: Bronte Harbour Classic 5K (June 2026)</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Section navigation
+        const sections = document.querySelectorAll('.section');
+        const navItems = document.querySelectorAll('.nav-item');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        // Time mapping for each section (in minutes)
+        const sectionTimes = {
+            'home': 0,
+            'intro': 5,
+            'journey': 3,
+            'runmate': 12,
+            'sunup': 12,
+            'obstacles': 10,
+            'framework': 10,
+            'toolchain': 10,
+            'impact': 10,
+            'qa': 18
+        };
+
+        function showSection(sectionId) {
+            // Hide all sections
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+
+                // Scroll content to top
+                document.querySelector('.content').scrollTop = 0;
+            }
+
+            // Update active nav item
+            navItems.forEach(item => item.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+
+            // Update progress
+            updateProgress(sectionId);
+        }
+
+        function updateProgress(currentSection) {
+            const sectionOrder = ['home', 'intro', 'journey', 'runmate', 'sunup', 'obstacles', 'framework', 'toolchain', 'impact', 'qa'];
+            const currentIndex = sectionOrder.indexOf(currentSection);
+
+            let elapsedTime = 0;
+            for (let i = 0; i <= currentIndex; i++) {
+                elapsedTime += sectionTimes[sectionOrder[i]];
+            }
+
+            const totalTime = Object.values(sectionTimes).reduce((a, b) => a + b, 0);
+            const progressPercentage = (elapsedTime / totalTime) * 100;
+
+            progressFill.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${elapsedTime} / ${totalTime} minutes`;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const currentActive = document.querySelector('.nav-item.active');
+            const allNavItems = Array.from(navItems);
+            const currentIndex = allNavItems.indexOf(currentActive);
+
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentIndex < allNavItems.length - 1) {
+                    allNavItems[currentIndex + 1].click();
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    allNavItems[currentIndex - 1].click();
+                }
+            }
+        });
+
+        // Initialize
+        updateProgress('home');
+    </script>
+</body>
+</html>
