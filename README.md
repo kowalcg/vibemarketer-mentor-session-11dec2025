@@ -89,6 +89,16 @@ This repository includes detailed, comprehensive guides for each section of the 
 
 10. **[How Greg Can Help: Expertise & Services](./docs/10-greg-expertise.md)** - Greg's expertise, areas of help, success stories, and how to connect for guidance and support
 
+### 🚀 Practical Action Guides
+
+**Get Started Immediately:**
+- **[Quick Start Guide: 30-Day Roadmap](./docs/quick-start-guide.md)** - Step-by-step plan from idea to App Store submission in 30 days
+- **[Tool Setup Guide](./docs/tool-setup-guide.md)** - Complete setup instructions for VibeCode, Cursor, Claude, AI assistants, and all essential tools
+
+**Avoid Common Pitfalls:**
+- **[Common Mistakes to Avoid](./docs/common-mistakes-to-avoid.md)** - Learn from real experience: 39 rejections, lost work, and how to prevent these mistakes
+- **[App Store Submission Checklist](./docs/app-store-submission-checklist.md)** - Complete pre-submission checklist to avoid rejections and delays
+
 ### 🎯 Quick Start Guide
 
 **New to building apps?** Start here:
