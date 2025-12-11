@@ -63,7 +63,49 @@ This is **not a tutorial on e-commerce tactics**. This is a story about business
 
 ---
 
-## 📚 Resources
+## 📚 Comprehensive Documentation
+
+This repository includes detailed, comprehensive guides for each section of the presentation. Each guide expands on the presentation content with additional research, practical examples, and actionable insights.
+
+### 📖 Complete Guide Series
+
+1. **[Welcome & The Journey](./docs/01-welcome-and-journey.md)** - From engineer to AI-enabled entrepreneur, how business changed, and who benefits from this transformation
+
+2. **[SunUp: Transforming Product into Ecosystem](./docs/02-sunup.md)** - Complete case study on building a sun safety platform, ecosystem thinking, and universal business applications
+
+3. **[RunMate Pro: Building from Personal Pain Points](./docs/03-runmate-pro.md)** - How solving your own problems leads to valuable business solutions, development journey, and business integration
+
+4. **[Obstacles: The Real Struggles](./docs/04-obstacles.md)** - Honest look at AI hallucinations, debugging challenges, App Store rejections, and strategies for overcoming obstacles
+
+5. **[5-Step Framework: Building Your First AI App](./docs/05-framework.md)** - Practical, step-by-step framework for building apps, from pain point identification to App Store submission
+
+6. **[Impact: What This Transformation Made Possible](./docs/06-impact.md)** - Business and personal transformation in 6 months, speed improvements, cost savings, and competitive advantages
+
+7. **[Tools & Resources: Everything You Need](./docs/07-tools-resources.md)** - Complete guide to VibeCode, Cursor, Claude Code, MCPs, AI assistants, dictation tools, and learning resources
+
+8. **[Q&A: Common Questions Answered](./docs/08-qa.md)** - Answers to frequently asked questions about building apps, technical challenges, business impact, and getting started
+
+9. **[VibeCode & Community: Why They Matter](./docs/09-vibecode-community.md)** - Deep dive into VibeCode's exceptional support, Vibe Marketer Community value, and how these resources accelerate learning
+
+10. **[How Greg Can Help: Expertise & Services](./docs/10-greg-expertise.md)** - Greg's expertise, areas of help, success stories, and how to connect for guidance and support
+
+### 🎯 Quick Start Guide
+
+**New to building apps?** Start here:
+1. Read [Welcome & The Journey](./docs/01-welcome-and-journey.md) to understand the transformation
+2. Review [5-Step Framework](./docs/05-framework.md) for the practical approach
+3. Explore [Tools & Resources](./docs/07-tools-resources.md) to get started
+4. Join [Vibe Marketer Community](./docs/09-vibecode-community.md) for support
+
+**Want to understand the apps?** Check out:
+- [SunUp Case Study](./docs/02-sunup.md) - Ecosystem transformation
+- [RunMate Pro Case Study](./docs/03-runmate-pro.md) - Personal pain point to business solution
+
+**Facing challenges?** Learn from:
+- [Obstacles Guide](./docs/04-obstacles.md) - Real struggles and solutions
+- [Q&A Section](./docs/08-qa.md) - Common questions answered
+
+## 📚 Additional Resources
 
 ### Building Apps with VibeCode
 - [Riley Brown's VibeCode tutorials](https://x.com/rileybrown)
@@ -123,7 +165,38 @@ This presentation is shared for educational purposes within the VibeMarketer com
 
 ## 🙏 Acknowledgments
 
-Special thanks to the VibeMarketer Community, Riley Brown (VibeCode), and all the AI tool builders making this transformation possible for non-technical founders.
+Special thanks to:
+- **VibeMarketer Community** - Outstanding support and learning resources
+- **VibeCode Team** - Exceptional customer support, especially Ansh for personal help
+- **Riley Brown** - VibeCode co-founder and excellent tutorials
+- **James Dickerson** - Vibe Marketer Community founder and incredible content
+- **Greg Isenberg** - Valuable podcasts and insights
+- All the AI tool builders making this transformation possible for non-technical founders
+
+## 🚀 Get Started Today
+
+**Ready to build your first app?**
+
+1. **Sign up for VibeCode** - Use code `GREG` for $10 credit
+   - [Sign Up for VibeCode](https://vibecode.go.link/?adj_t=1sj0ztnb&deep_link=vibecode%3A%2F%2Fsign-up%3Fcode%3Dref-2yhkaotpwtem&redirect_macos=https%3A%2F%2Fwww.vibecodeapp.com%2Fsign-up%3Fcode%3Dref-2yhkaotpwtem&fallback_lp=https%3A%2F%2Fwww.vibecodeapp.com%2Fsign-up%3Fcode%3Dref-2yhkaotpwtem&adjust_deeplink_js=1)
+
+2. **Join Vibe Marketer Community** - Complete learning ecosystem
+   - [Join the Community](https://www.skool.com/the-vibe-marketers/about?ref=1946b8770c3b4484baf4717f76ef065c)
+
+3. **Download the Apps** - See real examples
+   - [SunUp on App Store](https://apps.apple.com/ca/app/sunup-by-geartop/id6751246960)
+   - [RunMate Pro on App Store](https://apps.apple.com/ca/app/runmate-pro/id6751238787)
+
+4. **Read the Documentation** - Comprehensive guides for every aspect
+   - Start with [Welcome & The Journey](./docs/01-welcome-and-journey.md)
+   - Follow the [5-Step Framework](./docs/05-framework.md)
+   - Explore [Tools & Resources](./docs/07-tools-resources.md)
+
+**Need Help?**
+- Connect with Greg: [Contact Information](./docs/10-greg-expertise.md)
+- Join Vibe Marketer Community for support
+- Check [Q&A Section](./docs/08-qa.md) for common questions
+
 
 
 
